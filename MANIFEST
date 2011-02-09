@@ -1,0 +1,11 @@
+Build.PL
+Changes
+LICENSE
+MANIFEST
+META.yml
+README
+dist.ini
+lib/Sub/Spec/Pod.pm
+t/00-compile.t
+t/release-pod-coverage.t
+t/release-pod-syntax.t

@@ -1,0 +1,59 @@
+NAME
+    Sub::Spec::Pod - Generate POD documentation for subs
+
+VERSION
+    version 0.01
+
+SYNOPSIS
+     perl -MSub::Spec::Pod=gen_pod -e'print gen_pod(module=>"MyModule")'
+
+DESCRIPTION
+    This module generates API POD documentation for all subs in specified
+    module. Example output:
+
+     =head2 sub1(%args) -> RES
+
+     Summary of sub1.
+
+     Description of sub1...
+
+     Arguments (* denotes required arguments):
+
+     =over 4
+
+     =item * arg1* => int (default 0)
+
+     Blah ...
+
+     =item * arg2 => str (default none)
+
+     Blah blah ...
+
+     =back
+
+     =head2 sub2(%args) -> RES
+
+     ...
+
+FUNCTIONS
+    None of the functions are exported by default, but they are exportable.
+
+  gen_pod(%args) -> POD
+    Generate POD documentation.
+
+    Arguments:
+
+    *   module* => STR
+
+SEE ALSO
+    Sub::Spec
+
+AUTHOR
+    Steven Haryanto <stevenharyanto@gmail.com>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2011 by Steven Haryanto.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+
