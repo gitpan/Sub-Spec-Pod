@@ -2,7 +2,7 @@ NAME
     Sub::Spec::Pod - Generate POD documentation for subs
 
 VERSION
-    version 0.01
+    version 0.02
 
 SYNOPSIS
      perl -MSub::Spec::Pod=gen_pod -e'print gen_pod(module=>"MyModule")'
@@ -43,7 +43,19 @@ FUNCTIONS
 
     Arguments:
 
-    *   module* => STR
+    *   module => STR
+
+        Module name to use. The module will be required if not already so.
+
+    *   path => STR
+
+        Instruct the function to require the specified path instead of
+        guessing from module name. Useful when you want to from a specific
+        location (e.g. when building) and do not want to modify @INC.
+
+    *   require => BOOL (default 1)
+
+        If set to 0, will not attempt to require the module.
 
 SEE ALSO
     Sub::Spec

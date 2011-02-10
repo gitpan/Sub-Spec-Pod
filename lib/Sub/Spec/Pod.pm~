@@ -1,7 +1,4 @@
 package Sub::Spec::Pod;
-BEGIN {
-  $Sub::Spec::Pod::VERSION = '0.02';
-}
 # ABSTRACT: Generate POD documentation for subs
 
 use 5.010;
@@ -59,7 +56,7 @@ sub _gen_sub_pod($;$) {
         my $cat = $ah0->{arg_category} // "";
         if (!defined($prev_cat) || $prev_cat ne $cat) {
             $pod .= ($cat ? "$cat arguments" : "Arguments") .
-                " (* denotes required arguments):\n\n";
+                ": (* denotes required arguments):\n\n";
             $pod .= "=back\n\n" if defined($prev_cat);
             $pod .= "=over 4\n\n";
             $prev_cat = $cat;
@@ -106,13 +103,9 @@ sub gen_pod {
     my $module = $args{module};
 
     # require module and get specs
-    my $modulep = $args{path};
-    if (!defined($modulep)) {
-        $modulep = $module;
-        $modulep =~ s!::!/!g; $modulep .= ".pm";
-    }
+    my $modulep = $module;
+    $modulep =~ s!::!/!g; $modulep .= ".pm";
     if ($args{require} // 1) {
-        $log->trace("Attempting to require $modulep ...");
         eval { require $modulep };
         die $@ if $@;
     }
@@ -129,17 +122,7 @@ sub gen_pod {
 }
 
 1;
-
-
-=pod
-
-=head1 NAME
-
-Sub::Spec::Pod - Generate POD documentation for subs
-
-=head1 VERSION
-
-version 0.02
+__END__
 
 =head1 SYNOPSIS
 
@@ -174,6 +157,7 @@ Example output:
 
  ...
 
+
 =head1 FUNCTIONS
 
 None of the functions are exported by default, but they are exportable.
@@ -186,39 +170,13 @@ Arguments:
 
 =over 4
 
-=item * module => STR
-
-Module name to use. The module will be required if not already so.
-
-=item * path => STR
-
-Instruct the function to require the specified path instead of guessing from
-module name. Useful when you want to from a specific location (e.g. when
-building) and do not want to modify @INC.
-
-=item * require => BOOL (default 1)
-
-If set to 0, will not attempt to require the module.
+=item * module* => STR
 
 =back
+
 
 =head1 SEE ALSO
 
 L<Sub::Spec>
 
-=head1 AUTHOR
-
-Steven Haryanto <stevenharyanto@gmail.com>
-
-=head1 COPYRIGHT AND LICENSE
-
-This software is copyright (c) 2011 by Steven Haryanto.
-
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
-
 =cut
-
-
-__END__
-
