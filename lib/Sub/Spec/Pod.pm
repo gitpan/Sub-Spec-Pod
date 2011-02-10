@@ -1,6 +1,6 @@
 package Sub::Spec::Pod;
 BEGIN {
-  $Sub::Spec::Pod::VERSION = '0.06';
+  $Sub::Spec::Pod::VERSION = '0.07';
 }
 # ABSTRACT: Generate POD documentation for subs
 
@@ -32,7 +32,9 @@ sub _gen_sub_pod($;$) {
     my $pod = "";
 
     die "No name in spec" unless $sub_spec->{name};
-    $pod .= "=head2 $sub_spec->{name}(\%args) -> RES\n\n";
+    $pod .= "=head2 $sub_spec->{name}(\%args) -> RESP\n\n";
+
+    $log->trace("Generating POD for $sub_spec->{name} ...");
 
     if ($sub_spec->{summary}) {
         $pod .= "$sub_spec->{summary}.\n\n";
@@ -73,7 +75,7 @@ sub _gen_sub_pod($;$) {
                 $prev_cat = $cat;
             }
 
-            $pod .= "=item * $name".($ah0->{required} ? "*" : "")." => ";
+            $pod .= "=item * B<$name>".($ah0->{required} ? "*" : "")." => ";
             my $type;
             if ($arg->{type} eq 'any') {
                 my @schemas = map {_parse_schema($_)} @{$ah0->{of}};
@@ -92,7 +94,7 @@ sub _gen_sub_pod($;$) {
                                if defined($ah0->{default});
             $pod .= "\n\n";
 
-            $pod .= "One of:\n\n".
+            $pod .= "Value must be one of:\n\n".
                 join("", map {" $_\n"} split /\n/,
                      Data::Dump::dump($ah0->{in}))."\n\n"
                            if defined($ah0->{in});
@@ -158,7 +160,7 @@ Sub::Spec::Pod - Generate POD documentation for subs
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 
@@ -169,7 +171,7 @@ version 0.06
 This module generates API POD documentation for all subs in specified module.
 Example output:
 
- =head2 sub1(%args) -> RES
+ =head2 sub1(%args) -> RESP
 
  Summary of sub1.
 
@@ -189,7 +191,7 @@ Example output:
 
  =back
 
- =head2 sub2(%args) -> RES
+ =head2 sub2(%args) -> RESP
 
  ...
 

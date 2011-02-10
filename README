@@ -2,7 +2,7 @@ NAME
     Sub::Spec::Pod - Generate POD documentation for subs
 
 VERSION
-    version 0.06
+    version 0.07
 
 SYNOPSIS
      perl -MSub::Spec::Pod=gen_pod -e'print gen_pod(module=>"MyModule")'
@@ -11,7 +11,7 @@ DESCRIPTION
     This module generates API POD documentation for all subs in specified
     module. Example output:
 
-     =head2 sub1(%args) -> RES
+     =head2 sub1(%args) -> RESP
 
      Summary of sub1.
 
@@ -31,7 +31,7 @@ DESCRIPTION
 
      =back
 
-     =head2 sub2(%args) -> RES
+     =head2 sub2(%args) -> RESP
 
      ...
 
