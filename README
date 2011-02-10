@@ -2,7 +2,7 @@ NAME
     Sub::Spec::Pod - Generate POD documentation for subs
 
 VERSION
-    version 0.03
+    version 0.04
 
 SYNOPSIS
      perl -MSub::Spec::Pod=gen_pod -e'print gen_pod(module=>"MyModule")'

@@ -1,6 +1,6 @@
 package Sub::Spec::Pod;
 BEGIN {
-  $Sub::Spec::Pod::VERSION = '0.03';
+  $Sub::Spec::Pod::VERSION = '0.04';
 }
 # ABSTRACT: Generate POD documentation for subs
 
@@ -50,6 +50,7 @@ sub _gen_sub_pod($;$) {
     $args = { map {$_ => _parse_schema($args->{$_})} keys %$args };
 
     if (scalar keys %$args) {
+        my $noted_star_req;
         my $prev_cat;
         for my $name (sort {
             (($args->{$a}{attr_hashes}[0]{arg_category} // "") cmp
@@ -64,9 +65,10 @@ sub _gen_sub_pod($;$) {
             if (!defined($prev_cat) || $prev_cat ne $cat) {
                 $pod .= "=back\n\n" if defined($prev_cat);
                 $pod .= ($cat ? ucfirst("$cat arguments") :
-                             ($has_cat ? "General arguments":"Arguments")) .
-                                 " (C<*> denotes required arguments):\n\n";
-                $pod .= "=over 4\n\n";
+                             ($has_cat ? "General arguments":"Arguments"));
+                $pod .= " (C<*> denotes required arguments)"
+                    unless $noted_star_req++;
+                $pod .= ":\n\n=over 4\n\n";
                 $prev_cat = $cat;
             }
 
@@ -91,8 +93,8 @@ sub _gen_sub_pod($;$) {
 
             $pod .= "One of:\n\n".
                 join("", map {" $_\n"} split /\n/,
-                     Data::Dump::dump($ah0->{choices}))."\n\n"
-                           if defined($ah0->{choices});
+                     Data::Dump::dump($ah0->{in}))."\n\n"
+                           if defined($ah0->{in});
 
             #my $o = $ah0->{arg_pos};
             #my $g = $ah0->{arg_greedy};
@@ -155,7 +157,7 @@ Sub::Spec::Pod - Generate POD documentation for subs
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 
