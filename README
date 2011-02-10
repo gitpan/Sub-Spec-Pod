@@ -2,7 +2,7 @@ NAME
     Sub::Spec::Pod - Generate POD documentation for subs
 
 VERSION
-    version 0.02
+    version 0.03
 
 SYNOPSIS
      perl -MSub::Spec::Pod=gen_pod -e'print gen_pod(module=>"MyModule")'
@@ -21,11 +21,11 @@ DESCRIPTION
 
      =over 4
 
-     =item * arg1* => int (default 0)
+     =item * arg1* => INT (default 0)
 
      Blah ...
 
-     =item * arg2 => str (default none)
+     =item * arg2 => STR (default none)
 
      Blah blah ...
 
