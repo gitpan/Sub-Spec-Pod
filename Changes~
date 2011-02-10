@@ -1,6 +1,6 @@
 Revision history for Sub::Spec::Pod
 
-0.05     2011-02-10
+0.04     2011-02-10
 
          Fix schema clause ('in', not 'choices').
 
