@@ -1,5 +1,10 @@
 Revision history for Sub::Spec::Pod
 
+0.06     2011-02-10
+
+         Packaging bug: backup files not removed.
+
+
 0.05     2011-02-10
 
          Fix silly bug.
