@@ -1,6 +1,6 @@
 package Sub::Spec::Pod;
 BEGIN {
-  $Sub::Spec::Pod::VERSION = '0.07';
+  $Sub::Spec::Pod::VERSION = '0.08';
 }
 # ABSTRACT: Generate POD documentation for subs
 
@@ -9,7 +9,7 @@ use strict;
 use warnings;
 use Log::Any '$log';
 
-use Sub::Spec::CmdLine; #tmp
+use Sub::Spec::CmdLine; #tmp, for _parse_schema
 
 require Exporter;
 our @ISA       = qw(Exporter);
@@ -160,11 +160,11 @@ Sub::Spec::Pod - Generate POD documentation for subs
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 
- perl -MSub::Spec::Pod=gen_pod -e'print gen_pod(module=>"MyModule")'
+ % perl -MSub::Spec::Pod=gen_pod -e'print gen_pod(module=>"MyModule")'
 
 =head1 DESCRIPTION
 
