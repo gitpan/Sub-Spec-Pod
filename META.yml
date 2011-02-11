@@ -24,4 +24,4 @@ requires:
 resources:
   homepage: http://search.cpan.org/dist/Sub-Spec-Pod/
   repository: http://github.com/sharyanto/perl-Sub-Spec-Pod
-version: 0.08
+version: 0.09

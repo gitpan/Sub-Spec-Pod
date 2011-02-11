@@ -1,6 +1,6 @@
 package Sub::Spec::Pod;
 BEGIN {
-  $Sub::Spec::Pod::VERSION = '0.08';
+  $Sub::Spec::Pod::VERSION = '0.09';
 }
 # ABSTRACT: Generate POD documentation for subs
 
@@ -47,7 +47,6 @@ sub _gen_sub_pod($;$) {
     }
 
     my $args  = $sub_spec->{args} // {};
-    my $rargs = $sub_spec->{required_args};
     $args = { map {$_ => _parse_schema($args->{$_})} keys %$args };
     my $has_cat = grep { $_->{attr_hashes}[0]{arg_category} }
         values %$args;
@@ -160,7 +159,7 @@ Sub::Spec::Pod - Generate POD documentation for subs
 
 =head1 VERSION
 
-version 0.08
+version 0.09
 
 =head1 SYNOPSIS
 

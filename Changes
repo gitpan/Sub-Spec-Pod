@@ -1,5 +1,10 @@
 Revision history for Sub::Spec::Pod
 
+0.09     2011-02-11
+
+         Remove mention of 'required_args'.
+
+
 0.08     2011-02-11
 
          Build fix: missing dependency.
