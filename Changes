@@ -1,5 +1,13 @@
 Revision history for Sub::Spec::Pod
 
+0.10     2011-02-18
+
+         Generate documentation about response structure ([STATUSCODE, ERRMSG,
+         RESULT] + a paragraph explaining it).
+
+         Parse arg_aliases.
+
+
 0.09     2011-02-11
 
          Remove mention of 'required_args'.
