@@ -19,9 +19,9 @@ requires:
   JSON: 0
   List::MoreUtils: 0
   Log::Any: 0
-  Sub::Spec::CmdLine: 0
+  Sub::Spec: 0.04
   perl: 5.010000
 resources:
   homepage: http://search.cpan.org/dist/Sub-Spec-Pod/
   repository: http://github.com/sharyanto/perl-Sub-Spec-Pod
-version: 0.10
+version: 0.11

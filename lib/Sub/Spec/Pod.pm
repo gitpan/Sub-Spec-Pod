@@ -1,6 +1,6 @@
 package Sub::Spec::Pod;
 BEGIN {
-  $Sub::Spec::Pod::VERSION = '0.10';
+  $Sub::Spec::Pod::VERSION = '0.11';
 }
 # ABSTRACT: Generate POD documentation for subs
 
@@ -9,16 +9,14 @@ use strict;
 use warnings;
 use Log::Any '$log';
 
-use Sub::Spec::CmdLine; #tmp, for _parse_schema
+use Sub::Spec::Utils; #tmp, for _parse_schema
 
 require Exporter;
 our @ISA       = qw(Exporter);
 our @EXPORT_OK = qw(gen_pod);
 
-# currently we cheat by only parsing a limited subset of schema. this is because
-# Data::Sah is not available yet.
 sub _parse_schema {
-    Sub::Spec::CmdLine::_parse_schema(@_);
+    Sub::Spec::Utils::_parse_schema(@_);
 }
 
 sub _gen_sub_pod($;$) {
@@ -158,8 +156,8 @@ sub gen_pod {
         die $@ if $@;
     }
     no strict 'refs';
-    my $specs = \%{$module."::SUBS"};
-    die "Can't find \%SUBS in package $module\n" unless $specs;
+    my $specs = \%{$module."::SPEC"};
+    die "Can't find \%SPEC in package $module\n" unless $specs;
 
     for (keys %$specs) {
         $specs->{$_}{_package} = $module;
@@ -180,7 +178,7 @@ Sub::Spec::Pod - Generate POD documentation for subs
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 SYNOPSIS
 

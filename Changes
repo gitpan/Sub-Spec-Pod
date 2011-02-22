@@ -1,5 +1,10 @@
 Revision history for Sub::Spec::Pod
 
+0.11     2011-02-22
+
+         Use Sub::Spec::Utils
+
+
 0.10     2011-02-18
 
          Generate documentation about response structure ([STATUSCODE, ERRMSG,

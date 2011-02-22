@@ -17,7 +17,7 @@ my %module_build_args = (
     'Steven Haryanto <stevenharyanto@gmail.com>'
   ],
   'dist_name' => 'Sub-Spec-Pod',
-  'dist_version' => '0.10',
+  'dist_version' => '0.11',
   'license' => 'perl',
   'module_name' => 'Sub::Spec::Pod',
   'recommends' => {},
@@ -28,7 +28,7 @@ my %module_build_args = (
     'JSON' => '0',
     'List::MoreUtils' => '0',
     'Log::Any' => '0',
-    'Sub::Spec::CmdLine' => '0',
+    'Sub::Spec' => '0.04',
     'perl' => '5.010000'
   },
   'script_files' => []
