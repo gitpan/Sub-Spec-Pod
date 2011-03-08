@@ -1,5 +1,19 @@
 Revision history for Sub::Spec::Pod
 
+0.13     2011-03-08
+
+         Fix small bug.
+
+         Parse result_naked clause.
+
+
+0.12     2011-02-23
+
+         Add argument: specs.
+
+         Rename argument: require -> load.
+
+
 0.11     2011-02-22
 
          Use Sub::Spec::Utils

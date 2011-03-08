@@ -2,7 +2,7 @@ NAME
     Sub::Spec::Pod - Generate POD documentation for subs
 
 VERSION
-    version 0.11
+    version 0.13
 
 SYNOPSIS
      % perl -MSub::Spec::Pod=gen_pod -e'print gen_pod(module=>"MyModule")'
@@ -11,7 +11,7 @@ DESCRIPTION
     This module generates API POD documentation for all subs in specified
     module. Example output:
 
-     =head2 sub1(%args) -> [STATUSCODE, ERRORMSG, RESULT]
+     =head2 sub1(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
 
      Summary of sub1.
 
@@ -31,7 +31,7 @@ DESCRIPTION
 
      =back
 
-     =head2 sub2(%args) -> [STATUSCODE, ERRMSG, RESULT]
+     =head2 sub2(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
 
      ...
 
@@ -41,19 +41,24 @@ FUNCTIONS
   gen_pod(%args) -> POD
     Generate POD documentation.
 
-    Arguments:
+    Arguments (* denotes required argument):
 
-    *   module => STR
+    *   module* => STR
 
         Module name to use. The module will be required if not already so.
 
-    *   path => STR
+    *   path => STR (optional, default none)
 
         Instruct the function to require the specified path instead of
         guessing from module name. Useful when you want to from a specific
         location (e.g. when building) and do not want to modify @INC.
 
-    *   require => BOOL (default 1)
+    *   specs => HASHREF (optional, default none)
+
+        Instead of trying to require the module to get the spec, use the
+        supplied specs.
+
+    *   load => BOOL (optional, default 1)
 
         If set to 0, will not attempt to require the module.
 

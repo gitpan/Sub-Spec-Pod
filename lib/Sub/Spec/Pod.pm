@@ -1,6 +1,6 @@
 package Sub::Spec::Pod;
 BEGIN {
-  $Sub::Spec::Pod::VERSION = '0.11';
+  $Sub::Spec::Pod::VERSION = '0.13';
 }
 # ABSTRACT: Generate POD documentation for subs
 
@@ -25,6 +25,7 @@ sub _gen_sub_pod($;$) {
     require List::MoreUtils;
 
     my ($sub_spec, $opts) = @_;
+    $log->trace("-> _gen_sub_pod($sub_spec->{_package}::$sub_spec->{name})");
     $opts //= {};
 
     my $pod = "";
@@ -32,8 +33,10 @@ sub _gen_sub_pod($;$) {
     die "No name in spec" unless $sub_spec->{name};
     $log->trace("Generating POD for $sub_spec->{name} ...");
 
+    my $naked = $sub_spec->{result_naked};
+
     $pod .= "=head2 $sub_spec->{name}(\%args) -> ".
-        "[STATUSCODE, ERRMSG, RESULT]\n\n";
+        ($naked ? "RESULT" : "[STATUS_CODE, ERR_MSG, RESULT]")."\n\n";
 
     if ($sub_spec->{summary}) {
         $pod .= "$sub_spec->{summary}.\n\n";
@@ -45,12 +48,16 @@ sub _gen_sub_pod($;$) {
         $pod .= "$desc\n\n";
     }
 
-    $pod .= <<'_';
-Returns a 3-element arrayref. STATUSCODE is 200 on success, or an error code
-between 3xx-5xx (just like in HTTP). ERRMSG is a string containing error
+    if ($naked) {
+
+    } else {
+        $pod .= <<'_';
+Returns a 3-element arrayref. STATUS_CODE is 200 on success, or an error code
+between 3xx-5xx (just like in HTTP). ERR_MSG is a string containing error
 message, RESULT is the actual result.
 
 _
+    }
 
     my $args  = $sub_spec->{args} // {};
     $args = { map {$_ => _parse_schema($args->{$_})} keys %$args };
@@ -137,12 +144,14 @@ _
 
     }
 
+    $log->trace("<- _gen_sub_pod()");
     $pod;
 }
 
 sub gen_pod {
     my %args = @_;
     my $module = $args{module};
+    my $specs  = $args{specs};
 
     # require module and get specs
     my $modulep = $args{path};
@@ -150,18 +159,21 @@ sub gen_pod {
         $modulep = $module;
         $modulep =~ s!::!/!g; $modulep .= ".pm";
     }
-    if ($args{require} // 1) {
-        $log->trace("Attempting to require $modulep ...");
-        eval { require $modulep };
-        die $@ if $@;
+    if (!$specs) {
+        if ($args{load} // 1) {
+            $log->trace("Attempting to load $modulep ...");
+            eval { require $modulep };
+            die $@ if $@;
+        }
+        no strict 'refs';
+        $specs = \%{$module."::SPEC"};
+        #$log->tracef("\%$module\::SPEC = %s", $specs);
+        die "Can't find \%SPEC in package $module\n" unless $specs;
     }
-    no strict 'refs';
-    my $specs = \%{$module."::SPEC"};
-    die "Can't find \%SPEC in package $module\n" unless $specs;
-
+    $log->tracef("Functions that have spec: %s", [keys %$specs]);
     for (keys %$specs) {
-        $specs->{$_}{_package} = $module;
-        $specs->{$_}{name}     = $_;
+        $specs->{$_}{_package} //= $module;
+        $specs->{$_}{name}     //= $_;
     }
 
     join("", map { _gen_sub_pod($specs->{$_}) } sort keys %$specs);
@@ -178,7 +190,7 @@ Sub::Spec::Pod - Generate POD documentation for subs
 
 =head1 VERSION
 
-version 0.11
+version 0.13
 
 =head1 SYNOPSIS
 
@@ -189,7 +201,7 @@ version 0.11
 This module generates API POD documentation for all subs in specified module.
 Example output:
 
- =head2 sub1(%args) -> [STATUSCODE, ERRORMSG, RESULT]
+ =head2 sub1(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
 
  Summary of sub1.
 
@@ -209,7 +221,7 @@ Example output:
 
  =back
 
- =head2 sub2(%args) -> [STATUSCODE, ERRMSG, RESULT]
+ =head2 sub2(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
 
  ...
 
@@ -221,21 +233,25 @@ None of the functions are exported by default, but they are exportable.
 
 Generate POD documentation.
 
-Arguments:
+Arguments (* denotes required argument):
 
 =over 4
 
-=item * module => STR
+=item * module* => STR
 
 Module name to use. The module will be required if not already so.
 
-=item * path => STR
+=item * path => STR (optional, default none)
 
 Instruct the function to require the specified path instead of guessing from
 module name. Useful when you want to from a specific location (e.g. when
 building) and do not want to modify @INC.
 
-=item * require => BOOL (default 1)
+=item * specs => HASHREF (optional, default none)
+
+Instead of trying to require the module to get the spec, use the supplied specs.
+
+=item * load => BOOL (optional, default 1)
 
 If set to 0, will not attempt to require the module.
 
