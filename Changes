@@ -1,5 +1,13 @@
 Revision history for Sub::Spec::Pod
 
+0.14     2011-04-07
+
+         [ENHANCEMENTS]
+
+         - Parse 'features' clause and note in the POD about these features:
+           reverse, undo, pure, dry_run.
+
+
 0.13     2011-03-08
 
          Fix small bug.

@@ -2,7 +2,7 @@ NAME
     Sub::Spec::Pod - Generate POD documentation for subs
 
 VERSION
-    version 0.13
+    version 0.14
 
 SYNOPSIS
      % perl -MSub::Spec::Pod=gen_pod -e'print gen_pod(module=>"MyModule")'
@@ -34,6 +34,8 @@ DESCRIPTION
      =head2 sub2(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
 
      ...
+
+    This module uses Log::Any logging framework.
 
 FUNCTIONS
     None of the functions are exported by default, but they are exportable.

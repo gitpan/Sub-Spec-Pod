@@ -17,18 +17,17 @@ my %module_build_args = (
     'Steven Haryanto <stevenharyanto@gmail.com>'
   ],
   'dist_name' => 'Sub-Spec-Pod',
-  'dist_version' => '0.13',
+  'dist_version' => '0.14',
   'license' => 'perl',
   'module_name' => 'Sub::Spec::Pod',
   'recommends' => {},
   'recursive_test_files' => 1,
   'requires' => {
-    'Clone::Any' => '0',
     'Data::Dump::Partial' => '0',
     'JSON' => '0',
     'List::MoreUtils' => '0',
     'Log::Any' => '0',
-    'Sub::Spec' => '0.08',
+    'Sub::Spec' => '0.09',
     'perl' => '5.010000'
   },
   'script_files' => []

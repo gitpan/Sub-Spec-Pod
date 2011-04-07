@@ -1,6 +1,6 @@
 package Sub::Spec::Pod;
 BEGIN {
-  $Sub::Spec::Pod::VERSION = '0.13';
+  $Sub::Spec::Pod::VERSION = '0.14';
 }
 # ABSTRACT: Generate POD documentation for subs
 
@@ -55,6 +55,36 @@ sub _gen_sub_pod($;$) {
 Returns a 3-element arrayref. STATUS_CODE is 200 on success, or an error code
 between 3xx-5xx (just like in HTTP). ERR_MSG is a string containing error
 message, RESULT is the actual result.
+
+_
+    }
+
+    my $features = $sub_spec->{features} // {};
+    if ($features->{reverse}) {
+        $pod .= <<'_';
+This function supports reverse operation. To reverse, add argument C<-reverse>
+=> 1.
+
+_
+    }
+    if ($features->{undo}) {
+        $pod .= <<'_';
+This function supports undo operation. See L<Sub::Spec::Clause::features> for
+details on how to perform do/undo/redo.
+
+_
+    }
+    if ($features->{dry_run}) {
+        $pod .= <<'_';
+This function supports dry-run (simulation) mode. To run in dry-run mode, add
+argument C<-dry_run> => 1.
+
+_
+    }
+    if ($features->{pure}) {
+        $pod .= <<'_';
+This function is declared as pure, meaning it does not change any external state
+or have any side effects.
 
 _
     }
@@ -190,7 +220,7 @@ Sub::Spec::Pod - Generate POD documentation for subs
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 SYNOPSIS
 
@@ -224,6 +254,8 @@ Example output:
  =head2 sub2(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
 
  ...
+
+This module uses L<Log::Any> logging framework.
 
 =head1 FUNCTIONS
 
